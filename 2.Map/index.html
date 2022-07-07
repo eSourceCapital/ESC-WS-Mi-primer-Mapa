@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <style>
+      #map {
+        width: 800px;
+        height: 600px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Algunos países eSource</h1>
+    <div id="map"></div>
+
+    <script>
+      var mexico = { lat: 19.4326, lng: -99.1332 };
+      var guatemala = { lat: 14.6349, lng: -90.5328 };
+      var colombia = { lat: 4.5921, lng: -74.0814 };
+      var styles = [
+        {
+          featureType: "all",
+          elementType: "all",
+          stylers: [{ saturation: -100 }],
+        },
+      ];
+
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById("map"), {
+          center: mexico,
+          styles: styles,
+          zoom: 5,
+        });
+        addMarker(mexico, map);
+        addMarker(guatemala, map);
+        addMarker(colombia, map);
+      }
+
+      // function to add markers to map
+      function addMarker(location, map) {
+        const icon = {
+          url: "http://assets.stickpng.com/images/588891debc2fc2ef3a1860a2.png", // url
+          scaledSize: new google.maps.Size(30, 30), 
+        };
+       
+        var marker = new google.maps.Marker({
+          position: location,
+          icon: icon,
+          map: map,
+        });
+
+        //add info window to marker with location name
+        var infoWindow = new google.maps.InfoWindow({
+          content: "sucursal:" + location.lat + "," + location.lng,
+        });
+        // add info window to marker
+        marker.addListener("click", function () {
+          infoWindow.open(map, marker);
+        });
+      }
+
+      window.initMap = initMap;
+    </script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=[CAMBIAR API KEY]&callback=initMap"></script>
+  </body>
+</html>
